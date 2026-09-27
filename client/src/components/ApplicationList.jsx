@@ -1,25 +1,6 @@
-import {useState, useEffect} from 'react';
-import { getApplications, updateApplicationStatus, updateApplication ,deleteApplication } from '../services/applicationApi';
-const ApplicationList = () => {
-  const [applications, setApplications] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+import {  updateApplicationStatus ,deleteApplication } from '../services/applicationApi';
+const ApplicationList = ({ applications, loading, error, setApplications, setError }) => {
 
-  useEffect(() => {
-    const fetchApplications = async () => {
-      try {
-        const data = await getApplications();
-        setApplications(data);
-      } catch (error) {
-        console.error('Error fetching applications:', error);
-        setError('Failed to fetch applications');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchApplications();
-  }, []);
 
 
 const handleStatusChange = async (id, status) => {
@@ -42,7 +23,7 @@ const handleStatusChange = async (id, status) => {
   const handleDelete = async (id) => {
     try {
       await deleteApplication(id);
-      setApplications(applications.filter((application) => application.id !== id));
+      setApplications((prevApplications) => prevApplications.filter((application) => application.id !== id));
     } catch (error) {
       console.error('Error deleting application:', error);
       setError('Failed to delete application');
@@ -80,9 +61,6 @@ const handleStatusChange = async (id, status) => {
               <option value="OFFERED">Offered</option>
               <option value="REJECTED">Rejected</option> 
             </select>
-            <button onClick={() => handleStatusChange(application.id, application.status)} style={{ margin: '5px' }}>
-              Update Status
-            </button>
             <button onClick={() => handleDelete(application.id)} style={{ margin: '5px' }}>
               Delete
             </button>
