@@ -1,5 +1,5 @@
 import {  updateApplicationStatus ,deleteApplication } from '../services/applicationApi';
-const ApplicationList = ({ applications, selectedStatus, loading, error, setApplications, setSelectedStatus, setError }) => {
+const ApplicationList = ({ applications, searchValue, selectedStatus, loading, error, setApplications, setSelectedStatus, setSearchValue, setError }) => {
 
 
 
@@ -34,6 +34,12 @@ const handleStatusChange = async (id, status) => {
 
   return (
     <div>
+      <input
+        id="search-bar"
+        placeholder="Search..."
+        value={searchValue}
+        onChange={(e) => setSearchValue(e.target.value)}
+      />
       <select id="status-filter" 
       value={selectedStatus}
       onChange={(e) => setSelectedStatus(e.target.value)} >

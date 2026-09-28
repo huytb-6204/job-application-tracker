@@ -11,8 +11,9 @@ function App() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [selectedStatus, setSelectedStatus] = useState('ALL')
+  const [searchValue, setSearchValue] = useState('')
 
-
+// Function to handle the creation of a new application
   const handleApplicationCreated = (newApplication) => {
     setApplications((prevApplications) => [...prevApplications, newApplication])
   }
@@ -32,7 +33,14 @@ function App() {
   fetchApplications()
 }, []) 
 
-  const filteredData = selectedStatus === 'ALL' ? applications : applications.filter((application) => application.status === selectedStatus)
+// Filter applications based on selected status and search value
+  const filteredData = applications.filter((application) => {
+    const matchesStatus = selectedStatus === 'ALL' || application.status === selectedStatus
+    const normallizedSearchValue = searchValue.toLowerCase().trim()
+    const matchesSearch = application.company.toLowerCase().includes(normallizedSearchValue) || application.position.toLowerCase().includes(normallizedSearchValue)
+
+    return matchesStatus && matchesSearch
+  })
 
   return (
     <>
@@ -40,7 +48,7 @@ function App() {
       <h1>Job Application Tracker</h1>
 
       <Dashboard applications={applications} /> 
-      <ApplicationList applications={filteredData} selectedStatus={selectedStatus} loading={loading} error={error} setApplications={setApplications} setSelectedStatus={setSelectedStatus} setError={setError} />
+      <ApplicationList applications={filteredData} searchValue={searchValue} selectedStatus={selectedStatus} loading={loading} error={error} setApplications={setApplications} setSelectedStatus={setSelectedStatus} setSearchValue={setSearchValue} setError={setError} />
       <ApplicationForm onApplicationCreated={handleApplicationCreated} />
       
     </>
