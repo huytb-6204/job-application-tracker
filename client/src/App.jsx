@@ -10,6 +10,7 @@ function App() {
   const [applications, setApplications] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [selectedStatus, setSelectedStatus] = useState('ALL')
 
 
   const handleApplicationCreated = (newApplication) => {
@@ -20,7 +21,7 @@ function App() {
   const fetchApplications = async () => {
     try {
       const data = await getApplications()
-      setApplications(data)
+      setApplications(data) 
     } catch {
       setError('Failed to fetch applications')
     } finally {
@@ -29,13 +30,17 @@ function App() {
   }
 
   fetchApplications()
-}, [])
+}, []) 
+
+  const filteredData = selectedStatus === 'ALL' ? applications : applications.filter((application) => application.status === selectedStatus)
 
   return (
     <>
+
       <h1>Job Application Tracker</h1>
-      <Dashboard applications={applications} />
-      <ApplicationList applications={applications} loading={loading} error={error} setApplications={setApplications} setError={setError} />
+
+      <Dashboard applications={applications} /> 
+      <ApplicationList applications={filteredData} selectedStatus={selectedStatus} loading={loading} error={error} setApplications={setApplications} setSelectedStatus={setSelectedStatus} setError={setError} />
       <ApplicationForm onApplicationCreated={handleApplicationCreated} />
       
     </>

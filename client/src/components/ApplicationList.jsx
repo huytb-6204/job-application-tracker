@@ -1,5 +1,5 @@
 import {  updateApplicationStatus ,deleteApplication } from '../services/applicationApi';
-const ApplicationList = ({ applications, loading, error, setApplications, setError }) => {
+const ApplicationList = ({ applications, selectedStatus, loading, error, setApplications, setSelectedStatus, setError }) => {
 
 
 
@@ -30,8 +30,19 @@ const handleStatusChange = async (id, status) => {
     }
   };
 
+  
+
   return (
     <div>
+      <select id="status-filter" 
+      value={selectedStatus}
+      onChange={(e) => setSelectedStatus(e.target.value)} >
+        <option value="ALL">All</option>
+        <option value="APPLIED">Applied</option>
+        <option value="INTERVIEWING">Interviewing</option>
+        <option value="OFFERED">Offered</option>
+        <option value="REJECTED">Rejected</option>
+      </select>
       <h2>Application List</h2>
       {loading && <p>Loading applications...</p>}
       {error && <p style={{ color: 'red' }}>{error}</p>}
