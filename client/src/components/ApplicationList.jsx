@@ -34,6 +34,7 @@ const handleStatusChange = async (id, status) => {
 
   return (
     <div>
+      
       <input
         id="search-bar"
         placeholder="Search..."
