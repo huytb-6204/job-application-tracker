@@ -1,5 +1,5 @@
 import {  updateApplicationStatus ,deleteApplication } from '../services/applicationApi';
-const ApplicationList = ({ applications, searchValue, selectedStatus, loading, error, setApplications, setSelectedStatus, setSearchValue, setError }) => {
+const ApplicationList = ({ applications,  searchValue, selectedStatus, loading, error, setApplications, setSelectedApplication, setSelectedStatus, setSearchValue, setError }) => {
 
 
 
@@ -57,18 +57,11 @@ const handleStatusChange = async (id, status) => {
         {applications.map((application) => (
           //Space between the list items for better readability
 
-          <li key={application.id} style={{ marginBottom: '30px', textAlign: 'center' }}>
-            {application.company} - {application.position} - {application.status}
-            {application.applied_date && (
-              <span> - Applied on: {new Date(application.applied_date).toLocaleDateString()}</span>
-            )}
-            {application.follow_up_date && (
-              <span> - Follow-up on: {new Date(application.follow_up_date).toLocaleDateString()}</span>
-            )}
-            {application.location && <span> - Location: {application.location}</span>}
-            {application.created_at && (
-              <span> - Created at: {new Date(application.created_at).toLocaleString()}</span>
-            )}
+          <li key={application.id} style={{ marginBottom: '30px', textAlign: 'center' }} value={application.id} onClick={() => setSelectedApplication(application)}>
+            <strong>Company:</strong> {application.company} <br />
+            <button onClick={() => setSelectedApplication(application)} style={{ margin: '5px' }}>
+              View Details
+            </button>
             <select
               value={application.status}
               onChange={(e) => handleStatusChange(application.id, e.target.value)}
