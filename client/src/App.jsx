@@ -8,6 +8,7 @@ import Dashboard from './components/Dashboard'
 function App() {
 
   const [applications, setApplications] = useState([])
+  const [selectedApplication, setSelectedApplication] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [selectedStatus, setSelectedStatus] = useState('ALL')
@@ -48,7 +49,17 @@ function App() {
       <h1>Job Application Tracker</h1>
 
       <Dashboard applications={applications} /> 
-      <ApplicationList applications={filteredData} searchValue={searchValue} selectedStatus={selectedStatus} loading={loading} error={error} setApplications={setApplications} setSelectedStatus={setSelectedStatus} setSearchValue={setSearchValue} setError={setError} />
+      <ApplicationList applications={filteredData} searchValue={searchValue} selectedStatus={selectedStatus} loading={loading} error={error} setApplications={setApplications} setSelectedApplication={setSelectedApplication} setSelectedStatus={setSelectedStatus} setSearchValue={setSearchValue} setError={setError} />
+      {selectedApplication && (
+        <div>
+          <h2>Selected Application</h2>
+          <p>Company: {selectedApplication.company}</p>
+          <p>Position: {selectedApplication.position}</p> 
+          <p>Status: {selectedApplication.status}</p>
+        </div>
+      )}
+      <hr />
+      <h2>Add New Application</h2>
       <ApplicationForm onApplicationCreated={handleApplicationCreated} />
       
     </>
