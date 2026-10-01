@@ -58,7 +58,7 @@ function App() {
           <p>Position: {selectedApplication.position}</p> 
           <p>Status: {selectedApplication.status}</p>
 
-          <ApplicationTimeline applications={selectedApplication} />
+          <ApplicationTimeline application={selectedApplication} />
 
         </div>
       )}
