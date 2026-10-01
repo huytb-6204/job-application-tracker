@@ -4,8 +4,9 @@ import ApplicationList from './components/ApplicationList'
 import {getApplications} from './services/applicationApi'
 import ApplicationForm from './components/ApplicationForm'
 import Dashboard from './components/Dashboard'
+import ApplicationTimeline from './components/ApplicationTimeline'
 
-function App() {
+function App() {  
 
   const [applications, setApplications] = useState([])
   const [selectedApplication, setSelectedApplication] = useState(null)
@@ -56,6 +57,9 @@ function App() {
           <p>Company: {selectedApplication.company}</p>
           <p>Position: {selectedApplication.position}</p> 
           <p>Status: {selectedApplication.status}</p>
+
+          <ApplicationTimeline applications={selectedApplication} />
+
         </div>
       )}
       <hr />
